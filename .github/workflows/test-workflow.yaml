@@ -1,0 +1,36 @@
+name: Build code, run unit test, run SAST, SCA, DAST security scans
+on: push
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    name: Run unit tests and SAST scan on the source code 
+    steps:
+    - uses: actions/checkout@v3
+    - uses: actions/setup-node@v3
+      with:
+        node-version: 16
+        cache: npm
+    - run: npm install
+    - run: npm test
+#     - name: Cypress run
+#       uses: cypress-io/github-action@v4
+#       with:
+#         build: npm run build
+#         start: npm start
+#       continue-on-error: true
+    - name: SonarCloud Scan
+      uses: sonarsource/sonarcloud-github-action@master
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+      with:
+#        projectBaseDir: my-custom-directory
+        args: >
+          -Dsonar.organization=javaprojectreachability
+          -Dsonar.projectKey=javaprojectreachability
+          -Dsonar.javascript.mocha.reportPaths=reports/awesome-reports/mochawesome.json
+#             -Dsonar.sources=
+#             -Dsonar.test.exclusions=
+#             -Dsonar.tests=
+#             -Dsonar.verbose=true
