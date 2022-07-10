@@ -12,6 +12,8 @@ jobs:
         node-version: 16
         cache: npm
     - run: npm install
+    - run: npm install --save-dev mocha-sonarqube-reporter
+    - run: mocha --reporter mocha-sonarqube-reporter test --reporter-options output=xunit.xml
     - run: npm test
 #     - name: Cypress run
 #       uses: cypress-io/github-action@v4
@@ -29,7 +31,7 @@ jobs:
         args: >
           -Dsonar.organization=javaprojectreachability
           -Dsonar.projectKey=javaprojectreachability
-          -Dsonar.javascript.mocha.reportPaths=reports/awesome-reports/mochawesome.json
+#         -Dsonar.javascript.mocha.reportPaths=reports/awesome-reports/mochawesome.json
 #             -Dsonar.sources=
 #             -Dsonar.test.exclusions=
 #             -Dsonar.tests=
