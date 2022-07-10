@@ -12,6 +12,7 @@ jobs:
         node-version: 16
         cache: npm
     - run: npm install
+    - run: npm install mocha
     - run: npm install --save-dev mocha-sonarqube-reporter
     - run: mocha --reporter mocha-sonarqube-reporter test --reporter-options output=xunit.xml
     - run: npm test
