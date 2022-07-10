@@ -14,7 +14,6 @@ jobs:
     - run: npm install
     - run: npm install mocha
     - run: npm install --save-dev mocha-sonarqube-reporter
-    - run: mocha --reporter mocha-sonarqube-reporter test --reporter-options output=xunit.xml
     - run: npm test
 #     - name: Cypress run
 #       uses: cypress-io/github-action@v4
